@@ -5,25 +5,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospital SignUp</title>
+
+    <style>
+        td{
+            border: 2px solid black;
+        }
+    </style>
 </head>
 <body>
     <center><h1>Hospital SignUp Page</h1></center>
+    <!-- Hospital name -->
     <label for="hospital-name">Hospital Name: </label>
     <input type="text" id="hospital-name" /><br>
+
+    <!-- Hospital email -->
     <label for="hospital-email">Hospital Email: </label>
     <input type="text" id="hospital-email" required /><br>
+
+    <!-- Hospital location(city) -->
     <label for="hospital-location">Location: </label>
     <input type="text" id="hospital-location" placeholder="Enter the city name" /><br>
+
+    <!-- Exact Hospital location(latitude and longitude) -->
     <label for="hospital-latitude">Latitude: </label>
     <input type="text" id="hospital-latitude" readonly /><br>
     <label for="hospital-longitude">Longitude: </label>
     <input type="text" id="hospital-longitude" readonly /><br>
+
+    <!-- Number of floors -->
     <label for="hospital-total-floors">Number of Floors for accomodating patients: </label>
-    <input type="text" id="hospital-total-floors" /><br>
+    <input type="number" id="hospital-total-floors" /><br>
+
+    <!-- Number of rooms in each floor -->
     <label for="hospital-floor-rooms">Number of Rooms in each floor: </label>
-    <input type="text" id="hospital-floor-rooms" /><br>
+    <input type="number" id="hospital-floor-rooms" /><br>
+
+    <!-- Update Floor-wise number of Rooms -->
+    <button id="updateFloorWiseRooms" onclick="toggleVisibility('FloorWiseDetails'); displayFloorRooms();toggleVisibility('updateFloorWiseRooms')">Update Floor-wise number of Rooms</button><br>
+    <div class="FloorWiseDetails" id="FloorWiseDetails" style="display: none;">
+        <table id="FloorWiseDetailsTable">
+            <tr>
+                <td>Floor</td>
+                <td>Number of Rooms</td>
+            </tr>
+        </table>
+
+        <button onclick="updateFloorRooms()">Update</button>
+    </div>
+
+    <!-- Total number of Rooms -->
     <label for="hospital-total-rooms">Total Number of Rooms: </label>
-    <input type="text" id="hospital-total-rooms" /><br>
+    <input type="number" id="hospital-total-rooms" readonly /><br>
 
     <button onclick="getAndSetLocation()">Get Exact Location(Do not use VPN)</button><br>
     <button onclick="validate()">Submit</button>
@@ -66,6 +98,44 @@
             else{
                 // console.log(org[1]);
                 alert("You are not authorized to proceed");
+            }
+        }
+
+        // Display number of rooms in each floor
+        function displayFloorRooms() {
+            var nFloors = parseInt(d("hospital-total-floors").value);
+            var nFloorRooms = parseInt(d("hospital-floor-rooms").value);
+            var input = document.createElement('input');
+
+            console.table(nFloors, nFloorRooms);
+            for (let i = 1; i < nFloors+1; i++) {
+                var table = d("FloorWiseDetailsTable");
+                var row = table.insertRow();
+                var cell = row.insertCell();
+                cell.innerHTML = "Floor "+i;
+                cell = row.insertCell();
+                cell.innerHTML = `<input type="number" value=${nFloorRooms} id="F${i}" />`;
+            }
+        }
+
+        // Update number of rooms in each floor
+        function updateFloorRooms(){
+            var nFloors = parseInt(d("hospital-total-floors").value);
+            let totalRooms = 0;
+            for (let index = 1; index < nFloors+1; index++) {
+                totalRooms += parseInt(d("F"+index).value);
+            }
+            console.log(totalRooms);
+            d("hospital-total-rooms").value = totalRooms;
+        }
+
+        // Toggle Visibility
+        function toggleVisibility(x) {
+            if(d(x).style.display === "none"){
+                d(x).style.display = "block";
+            }
+            else{
+                d(x).style.display = "none"
             }
         }
     </script>
