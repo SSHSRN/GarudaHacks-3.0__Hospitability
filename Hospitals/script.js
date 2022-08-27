@@ -30,7 +30,7 @@ function validate() {
   // Check for authorised email
   if (auth_orgs.includes(org[1])) {
     console.log(org[1]);
-    alert("You are authorized to proceed");
+    form_submitted();
   } else {
     // console.log(org[1]);
     alert("You are not authorized to proceed");
