@@ -5,18 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospital SignUp</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./script.js" defer> </script>
 
-    <style>
-        td{
-            border: 2px solid black;
-        }
-    </style>
+    <!-- JQuery -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.1.min.js" 
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" 
+        crossorigin="anonymous">
+    </script> -->
 </head>
 <body>
     <center><h1>Hospital SignUp Page</h1></center>
     <!-- Hospital name -->
     <label for="hospital-name">Hospital Name: </label>
-    <input type="text" id="hospital-name" /><br>
+    <input type="text" id="hospital-name" required /><br>
 
     <!-- Hospital email -->
     <label for="hospital-email">Hospital Email: </label>
@@ -24,7 +26,7 @@
 
     <!-- Hospital location(city) -->
     <label for="hospital-location">Location: </label>
-    <input type="text" id="hospital-location" placeholder="Enter the city name" /><br>
+    <input type="text" id="hospital-location" placeholder="Enter the city name" required /><br>
 
     <!-- Exact Hospital location(latitude and longitude) -->
     <label for="hospital-latitude">Latitude: </label>
@@ -34,14 +36,14 @@
 
     <!-- Number of floors -->
     <label for="hospital-total-floors">Number of Floors for accomodating patients: </label>
-    <input type="number" id="hospital-total-floors" /><br>
+    <input type="number" class="calcNRooms" id="hospital-total-floors" value="0" /><br>
 
     <!-- Number of rooms in each floor -->
     <label for="hospital-floor-rooms">Number of Rooms in each floor: </label>
-    <input type="number" id="hospital-floor-rooms" /><br>
+    <input type="number" class="calcNRooms" id="hospital-floor-rooms" value="0" /><br>
 
     <!-- Update Floor-wise number of Rooms -->
-    <button id="updateFloorWiseRooms" onclick="toggleVisibility('FloorWiseDetails'); displayFloorRooms();toggleVisibility('updateFloorWiseRooms')">Update Floor-wise number of Rooms</button><br>
+    <button id="updateFloorWiseRooms" onclick="toggleVisibility('FloorWiseDetails');displayFloorRooms();toggleVisibility('updateFloorWiseRooms')">Update Floor-wise number of Rooms</button><br>
     <div class="FloorWiseDetails" id="FloorWiseDetails" style="display: none;">
         <table id="FloorWiseDetailsTable">
             <tr>
@@ -50,94 +52,14 @@
             </tr>
         </table>
 
-        <button onclick="updateFloorRooms()">Update</button>
+        <button onclick="updateFloorRooms();toggleVisibility('FloorWiseDetails');toggleVisibility('updateFloorWiseRooms')">Update</button>
     </div>
 
     <!-- Total number of Rooms -->
     <label for="hospital-total-rooms">Total Number of Rooms: </label>
-    <input type="number" id="hospital-total-rooms" readonly /><br>
+    <input type="number" id="hospital-total-rooms" value="0" readonly /><br>
 
     <button onclick="getAndSetLocation()">Get Exact Location(Do not use VPN)</button><br>
     <button onclick="validate()">Submit</button>
-
-    <script>
-        function d(x) {
-            return document.getElementById(x);
-        }
-
-        // Get the exact Latitude and Longitude
-        function getAndSetLocation() {
-            // console.log("working");
-            if(navigator.geolocation){
-                navigator.geolocation.getCurrentPosition(setPosition);
-            } else {
-                alert("Cannot get exact location");
-            }
-        }
-
-        // Set Latitude and Longitude in the form
-        function setPosition(position){
-            d("hospital-latitude").value = position.coords.latitude;
-            d("hospital-longitude").value = position.coords.latitude;
-        }
-
-        // Validate if user is a hospital
-        function validate() {
-            // Authorised organisations
-            // Added edu too for checking purposes
-            var auth_orgs = ["org","edu"];
-            
-            let org_half = d("hospital-email").value.split("@");
-            let org = org_half[1].split(".");
-            console.log(org);
-            // Check for authorised email
-            if (auth_orgs.includes(org[1])) {
-                console.log(org[1]);
-                alert("You are authorized to proceed");
-            }
-            else{
-                // console.log(org[1]);
-                alert("You are not authorized to proceed");
-            }
-        }
-
-        // Display number of rooms in each floor
-        function displayFloorRooms() {
-            var nFloors = parseInt(d("hospital-total-floors").value);
-            var nFloorRooms = parseInt(d("hospital-floor-rooms").value);
-            var input = document.createElement('input');
-
-            console.table(nFloors, nFloorRooms);
-            for (let i = 1; i < nFloors+1; i++) {
-                var table = d("FloorWiseDetailsTable");
-                var row = table.insertRow();
-                var cell = row.insertCell();
-                cell.innerHTML = "Floor "+i;
-                cell = row.insertCell();
-                cell.innerHTML = `<input type="number" value=${nFloorRooms} id="F${i}" />`;
-            }
-        }
-
-        // Update number of rooms in each floor
-        function updateFloorRooms(){
-            var nFloors = parseInt(d("hospital-total-floors").value);
-            let totalRooms = 0;
-            for (let index = 1; index < nFloors+1; index++) {
-                totalRooms += parseInt(d("F"+index).value);
-            }
-            console.log(totalRooms);
-            d("hospital-total-rooms").value = totalRooms;
-        }
-
-        // Toggle Visibility
-        function toggleVisibility(x) {
-            if(d(x).style.display === "none"){
-                d(x).style.display = "block";
-            }
-            else{
-                d(x).style.display = "none"
-            }
-        }
-    </script>
 </body>
 </html>
