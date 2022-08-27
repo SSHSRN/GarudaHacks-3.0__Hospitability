@@ -94,6 +94,16 @@ function toggleVisibility(x) {
   }
 }
 
+function togglePasswordEyeVisibility(x,y) {
+  if (d(x).style.display === "none") {
+    d(x).style.display = "inline-block";
+    d(y).style.display = "none";
+  } else {
+    d(x).style.display = "none";
+    d(y).style.display = "inline-block";
+  }
+}
+
 // Function to update total number of rooms
 let inputs = document.querySelectorAll(".calcNRooms");
 for (i of inputs) {
@@ -119,6 +129,7 @@ function get_room_in_each_floor() {
 function form_submitted() {
   var hospitalName = d("hospital-name").value;
   var hospitalEmail = d("hospital-email").value;
+  var hospitalPass = d("hospital-password").value;
   var hospitalCity = d("hospital-location").value;
   var hospitalCoords = {
     latitude: d("hospital-latitude").value,
@@ -134,7 +145,7 @@ function form_submitted() {
   let req_options = {
     name: hospitalName,
     loginEmail: hospitalEmail,
-    loginPass: "Srihari Add Password variable here",
+    loginPass: hospitalPass,
     location: hospitalCity,
     latitude: hospitalCoords.latitude,
     longitude: hospitalCoords.longitude,
@@ -149,15 +160,13 @@ function form_submitted() {
   console.log(req_options);
 }
 
-// Variables(For back-end)
-// var hospitalName = d("hospital-name").value;
-// var hospitalEmail = d("hospital-email").value;
-// var hospitalCity = d("hospital-location").value;
-// var hospitalCoords = {
-//   latitude: d("hospital-latitude").value,
-//   longitude: d("hospital-longitude").value,
-// };
-// // console.log(hospitalCoords);
-// // Object is getting printed, but must think how to update the coords once user clicks the button.
-// var hospitalTotalFloors = d("hospital-total-floors").value;
-// var hospitalTotalRooms = d("hospital-total-rooms").value;
+// Toggle Password Visibility
+function togglePasswordVisibility() {
+  const togglePasswordEye = document.querySelector('#password-eye');
+  const password = document.querySelector('#hospital-password');
+
+  const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+  password.setAttribute('type', type);
+
+  togglePasswordEyeVisibility("password-eye-open","password-eye-close");
+}
