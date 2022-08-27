@@ -34,11 +34,11 @@
 
     <!-- Number of floors -->
     <label for="hospital-total-floors">Number of Floors for accomodating patients: </label>
-    <input type="number" id="hospital-total-floors" /><br>
+    <input type="number" class="calcNRooms" id="hospital-total-floors" value="0" /><br>
 
     <!-- Number of rooms in each floor -->
     <label for="hospital-floor-rooms">Number of Rooms in each floor: </label>
-    <input type="number" id="hospital-floor-rooms" /><br>
+    <input type="number" class="calcNRooms" id="hospital-floor-rooms" value="0" /><br>
 
     <!-- Update Floor-wise number of Rooms -->
     <button id="updateFloorWiseRooms" onclick="toggleVisibility('FloorWiseDetails'); displayFloorRooms();toggleVisibility('updateFloorWiseRooms')">Update Floor-wise number of Rooms</button><br>
@@ -55,7 +55,7 @@
 
     <!-- Total number of Rooms -->
     <label for="hospital-total-rooms">Total Number of Rooms: </label>
-    <input type="number" id="hospital-total-rooms" readonly /><br>
+    <input type="number" id="hospital-total-rooms" value="0" readonly /><br>
 
     <button onclick="getAndSetLocation()">Get Exact Location(Do not use VPN)</button><br>
     <button onclick="validate()">Submit</button>
@@ -137,6 +137,16 @@
             else{
                 d(x).style.display = "none"
             }
+        }
+
+        // Function to update total number of rooms
+        let inputs = document.querySelectorAll('.calcNRooms');
+        for(i of inputs) {
+        i.addEventListener('change', function() {
+            // console.log("change detected");
+            // do something on change
+            d("hospital-total-rooms").value = parseInt(d("hospital-total-floors").value) * parseInt(d("hospital-floor-rooms").value)
+        });
         }
     </script>
 </body>
