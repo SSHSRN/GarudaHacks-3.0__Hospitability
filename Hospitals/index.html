@@ -41,7 +41,7 @@
     <input type="number" class="calcNRooms" id="hospital-floor-rooms" value="0" /><br>
 
     <!-- Update Floor-wise number of Rooms -->
-    <button id="updateFloorWiseRooms" onclick="toggleVisibility('FloorWiseDetails'); displayFloorRooms();toggleVisibility('updateFloorWiseRooms')">Update Floor-wise number of Rooms</button><br>
+    <button id="updateFloorWiseRooms" onclick="toggleVisibility('FloorWiseDetails');toggleVisibility('updateFloorWiseRooms')">Update Floor-wise number of Rooms</button><br>
     <div class="FloorWiseDetails" id="FloorWiseDetails" style="display: none;">
         <table id="FloorWiseDetailsTable">
             <tr>
@@ -50,7 +50,7 @@
             </tr>
         </table>
 
-        <button onclick="updateFloorRooms()">Update</button>
+        <button onclick="updateFloorRooms();toggleVisibility('FloorWiseDetails');toggleVisibility('updateFloorWiseRooms')">Update</button>
     </div>
 
     <!-- Total number of Rooms -->
@@ -70,6 +70,7 @@
             // console.log("working");
             if(navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(setPosition);
+                updateCoordsVar();
             } else {
                 alert("Cannot get exact location");
             }
@@ -145,9 +146,21 @@
         i.addEventListener('change', function() {
             // console.log("change detected");
             // do something on change
-            d("hospital-total-rooms").value = parseInt(d("hospital-total-floors").value) * parseInt(d("hospital-floor-rooms").value)
+            d("hospital-total-rooms").value = parseInt(d("hospital-total-floors").value) * parseInt(d("hospital-floor-rooms").value);
+            displayFloorRooms();
         });
         }
+
+
+        // Variables(For back-end)
+        var hospitalName = d("hospital-name").value;
+        var hospitalEmail = d("hospital-email").value;
+        var hospitalCity = d("hospital-location").value;
+        var hospitalCoords = {latitude: d("hospital-latitude").value, longitude: d("hospital-longitude").value};
+        // console.log(hospitalCoords);
+        // Object is getting printed, but must think how to update the coords once user clicks the button.
+        var hospitalTotalFloors = d("hospital-total-floors").value;
+        var hospitalTotalRooms = d("hospital-total-rooms").value;
     </script>
 </body>
 </html>
