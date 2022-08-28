@@ -14,6 +14,8 @@ Here're some of the project's major features:
 
 <h2>Check it out at: https://sshsrn.github.io/GarudaHacks-3.0__Hospitability/</h2>
 
+<h2>Check the back-end repo at: https://github.com/parthusun8/garuda-hacks-backend</h2>
+
 <h2>Built with</h2>
 
 **Front-End:** 
