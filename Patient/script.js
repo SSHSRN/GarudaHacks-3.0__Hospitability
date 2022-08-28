@@ -1,66 +1,32 @@
-const container = document.querySelector(".container");
-const beds = document.querySelectorAll(".row .bed:not(.occupied)");
-const count = document.getElementById("count");
-const total = document.getElementById("total");
-const roomSelect = document.getElementById("room");
+const baseURL = "http://731d-14-96-13-220.ngrok.io/users/"
 
-populateUI();
+async function onCitySubmit(){
+  var city = document.querySelector(".hospital-container");
+  var hospital_list_el = document.querySelector(".hospitals--list");
+  var bed__container_el = document.querySelector(".bed--container");
 
-let ticketPrice = +roomSelect.value;
+  console.log(hospital_list_el, bed__container_el);
+  hospital_list_el.classList.remove("hidden");
+  bed__container_el.classList.remove("hidden");
+  city.classList.add("hidden");
+  console.log("clicked");
 
-function setRoomData(roomIndex, roomPrice) {
-  localStorage.setItem("selectedRoomIndex", roomIndex);
-  localStorage.setItem("selectedRoomPrice", roomPrice);
-}
+  
 
-function updateSelectedCount() {
-  const selectedBeds = document.querySelectorAll(".row .bed.selected");
+  const city_input = city.value;
 
-  const bedsIndex = [...selectedBeds].map((bed) => [...beds].indexOf(bed));
-
-  localStorage.setItem("selectedBeds", JSON.stringify(bedsIndex));
-
-  const selectedBedsCount = selectedBeds.length;
-
-  count.innerText = selectedBedsCount;
-  total.innerText = selectedBedsCount * ticketPrice;
-
-  setRoomData(roomSelect.selectedIndex, roomSelect.value);
-}
-
-function populateUI() {
-  const selectedBeds = JSON.parse(localStorage.getItem("selectedBeds"));
-
-  if (selectedBeds !== null && selectedBeds.length > 0) {
-    beds.forEach((bed, index) => {
-      if (selectedBeds.indexOf(index) > -1) {
-        bed.classList.add("selected");
-      }
-    });
+  const req_options = {
+    "state" : city_input
   }
-
-  const selectedRoomIndex = localStorage.getItem("selectedRoomIndex");
-
-  if (selectedRoomIndex !== null) {
-    roomSelect.selectedIndex = selectedRoomIndex;
-  }
+  let resp = "";
+  fetch(baseURL + "getrooms", {
+    method: "POST",
+    headers: {'Content-Type': 'application/json'}, 
+    body: JSON.stringify(req_options)
+  }).then(res => {
+    console.log("Request complete! response:", res.data);
+    resp = res.data;
+    // alert("Updated successfully");
+  }).catch(err => {console.log(err.message)});
+  console.log(resp);
 }
-
-roomSelect.addEventListener('change', (e) => {
-  ticketPrice =+e.target.value;
-  setRoomData(e.target.selectedIndex, e.target.value);
-  updateSelectedCount();
-});
-
-container.addEventListener("click", (e) => {
-  if (
-    e.target.classList.contains("bed") &&
-    !e.target.classList.contains("occupied")
-  ) {
-    e.target.classList.toggle("selected");
-
-    updateSelectedCount();
-  }
-});
-
-updateSelectedCount();
