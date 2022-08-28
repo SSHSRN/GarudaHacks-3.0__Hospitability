@@ -12,9 +12,9 @@ Here're some of the project's major features:
 *   Add Hospital accounts (SignUp/SignIn).
 *   Update Room Availability(done ny the hospital).
 
-<h2>Check it out at: https://sshsrn.github.io/GarudaHacks-3.0__Hospitability/</h2>
+<h2>Check it out at: https://sshsrn.github.io/Hospitability/</h2>
 
-<h2>Check the back-end repo at: https://github.com/parthusun8/garuda-hacks-backend</h2>
+<h2>Check the back-end repo at: https://github.com/parthusun8/hospitability-backend</h2>
 
 <h2>Built with</h2>
 
