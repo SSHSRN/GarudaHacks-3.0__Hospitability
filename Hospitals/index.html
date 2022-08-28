@@ -31,7 +31,7 @@
         <div class="form-group row">
             <label for="hospital-email" class="col-sm-3 col-form-label">Hospital&nbsp;Email: </label>
             <div class="col-sm-9">
-              <input type="email" class="form-control" id="hospital-name" placeholder="Hospital Email" required>
+              <input type="email" class="form-control" id="hospital-email" placeholder="Hospital Email" required>
             </div>
         </div>
         
@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <button class="btn btn-primary mb-3" onclick="getAndSetLocation()">Get Exact Location</button>
+        
 
         <!-- Exact Hospital location(latitude and longitude) -->
         <div class="form-group row">
@@ -62,6 +62,7 @@
               <input type="text" class="form-control" id="hospital-latitude" readonly>
             </div>
         </div>
+        
 
         <div class="form-group row">
             <label for="hospital-longitude" class="col-sm-3 col-form-label">Longitude: </label>
@@ -69,6 +70,8 @@
               <input type="text" class="form-control" id="hospital-longitude" readonly>
             </div>
         </div>
+
+        <button class="btn btn-primary mb-3" onclick="getAndSetLocation()">Get Exact Location</button>
 
         <!-- Number of floors -->
         <div class="form-group row">
