@@ -35,8 +35,12 @@ Here're some of the project's major features:
 Contact us at: sshsrn@gmail.com parthusun8@gmail.com
 
 ## Screenshots
+* First commit
 ![](readme-assets/1.png)
+* basic structure
 ![](readme-assets/2.png)
-![](readme-assets/3.jpeg)
+* Hospital page UI
+![](readme-assets/3.png)
 ![](readme-assets/4.png)
+* Console
 ![](readme-assets/5.png)
