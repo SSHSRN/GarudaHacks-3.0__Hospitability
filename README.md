@@ -1,6 +1,6 @@
 
 
-<h1 align=middle><img width="20%" align=middle src="readme-assets/logo.jpeg"><br>Hospitability</h1>
+<h1 align=middle><img width="30%" align=middle src="readme-assets/logo.jpeg"><br>Hospitability</h1>
 
 <h2  align="center" id="description">Hospitability is a web-application where patients can check out the resouce availability(Room availability for treatment) 
   in the nearby hospitals and  thus, saving the waiting time and also the extra travelling time for the patients.</h2>
