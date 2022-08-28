@@ -1,3 +1,6 @@
+const baseURL = "http://db16-14-96-13-220.ngrok.io/users/"
+
+
 function d(x) {
   return document.getElementById(x);
 }
@@ -126,7 +129,7 @@ function get_room_in_each_floor() {
   return rooms;
 }
 
-function form_submitted() {
+async function form_submitted() {
   var hospitalName = d("hospital-name").value;
   var hospitalEmail = d("hospital-email").value;
   var hospitalPass = d("hospital-password").value;
@@ -158,6 +161,15 @@ function form_submitted() {
   req_options["floors"] = floor_details;
 
   console.log(req_options);
+
+  fetch(baseURL + "signup", {
+    method: "POST",
+    headers: {'Content-Type': 'application/json'}, 
+    body: JSON.stringify(req_options)
+  }).then(res => {
+    console.log("Request complete! response:", res.data);
+    alert("Updated successfully");
+  }).catch(err => {console.log(err.message)});
 }
 
 // Toggle Password Visibility
